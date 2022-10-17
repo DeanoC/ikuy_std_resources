@@ -17,9 +17,10 @@ software:
  - program.hello_world
 
 # gateware (FPGA) defined by this project
-#gateware:
+gateware:
+ - none
 
 # by default each board uses its own built in toplevel definition
 # However when using gateware or more complex topologies local
 # toplevel file should be used
-#toplevel:
+toplevel: default
