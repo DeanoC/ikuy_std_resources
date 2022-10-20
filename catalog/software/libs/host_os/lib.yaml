@@ -21,12 +21,3 @@ libraries:
 # non library dependencies (like host programs, asset processing etc.)
 dependencies: 
  - 
-
-actions:
- - git clone # TODO 
- - software sources
-  - in: src
-    out: src
-  - in: include
-    out: include
-
