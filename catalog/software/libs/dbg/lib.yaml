@@ -17,5 +17,4 @@ libraries:
  - platform
 
 # non library dependencies (like host programs, asset processing etc.)
-dependencies: 
- - 
+dependencies: []
