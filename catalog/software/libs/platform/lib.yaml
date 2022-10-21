@@ -1,4 +1,4 @@
-name: host_os
+name: platform
 
 boards: 
  - host
@@ -16,7 +16,6 @@ libraries:
  - core
  - dbg
  - memory
- - platform
 
 # non library dependencies (like host programs, asset processing etc.)
 dependencies: []
