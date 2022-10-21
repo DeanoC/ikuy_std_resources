@@ -1,0 +1,23 @@
+name: host_os
+
+boards: 
+ - host
+
+cpus:
+ - host
+
+source: 
+# - cpp
+#  - src/*.cpp
+ - zig
+
+# libraries to be linked into this peice of software
+libraries:
+ - core
+ - dbg
+ - memory
+ - platform
+
+# non library dependencies (like host programs, asset processing etc.)
+dependencies: 
+ - 
