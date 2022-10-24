@@ -45,7 +45,7 @@
 #endif
 
 #include "core/core.h"
-#include "library_defines/library_defines.h"
+//#include "library_defines/library_defines.h"
 #include <stddef.h>
 
 #if !defined(UTF8_NO_STD_MALLOC)

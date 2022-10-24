@@ -21,7 +21,6 @@
 #include "core/core.h"
 #include "core/utf8.h"
 #include "core/unicode.h"
-#include "dbg/print.h"
 
 size_t Core_UCS2toUTF8NullLen(uint16_t const * text)
 {
