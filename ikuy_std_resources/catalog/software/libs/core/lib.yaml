@@ -14,3 +14,7 @@ libraries: []
 
 # non library dependencies (like host programs, asset processing etc.)
 dependencies: [] 
+
+
+actions:
+ - git 
