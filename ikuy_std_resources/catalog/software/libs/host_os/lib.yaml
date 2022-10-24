@@ -6,17 +6,15 @@ boards:
 cpus:
  - host
 
-source: 
-# - cpp
-#  - src/*.cpp
+builder: 
  - zig
 
 # libraries to be linked into this peice of software
 libraries:
  - core
- - dbg
- - memory
- - platform
+# - dbg
+# - memory
+# - platform
 
 # non library dependencies (like host programs, asset processing etc.)
 dependencies: []
