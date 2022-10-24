@@ -1,4 +1,4 @@
-name: host_os
+name: base
 
 boards: 
  - host
@@ -10,14 +10,10 @@ builder:
  - zig
 
 # libraries to be linked into this peice of software
-libraries:
- - base
-# - dbg
-# - memory
-# - platform
+libraries: []
 
 # non library dependencies (like host programs, asset processing etc.)
-dependencies: []
+dependencies: [] 
 
 actions:
- -  
+ - fetch git git@github.com:DeanoC/ikuy.base.git
