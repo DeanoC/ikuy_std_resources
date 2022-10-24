@@ -11,7 +11,7 @@ builder:
 
 # libraries to be linked into this peice of software
 libraries:
- - core
+ - base
 # - dbg
 # - memory
 # - platform
@@ -20,4 +20,4 @@ libraries:
 dependencies: []
 
 actions:
- - git 
+ -  
