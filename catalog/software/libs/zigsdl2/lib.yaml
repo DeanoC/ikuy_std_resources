@@ -18,7 +18,7 @@ dependencies: []
 actions:
  - fetch git git@github.com:MasterQ32/SDL.zig.git
 
-zigLink: 
+zigLink: >
   fn sdl2Link(_: *const Library, b: *std.build.Builder, exe: *std.build.LibExeObjStep) void {
     const sdl2 = @import("libs/SDL.zig/Sdk.zig");
     const sdk = sdl2.init(b);
