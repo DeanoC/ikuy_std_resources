@@ -1,6 +1,9 @@
 const std = @import("std");
+const Library = @import("../libs/library.zig").Library;
 
-pub fn build(b: *std.build.Builder) void {
+const Pkg = std.build.Pkg;
+
+pub fn build(b: *std.build.Builder, libs: std.StringHashMap(Library)) void {
     // Standard target options allows the person running `zig build` to choose
     // what target to build for. Here we do not override the defaults, which
     // means any target is allowed, and the default is native. Other options
@@ -12,9 +15,16 @@ pub fn build(b: *std.build.Builder) void {
     const mode = b.standardReleaseOptions();
 
     const helloWorldBuildRoot = b.pathFromRoot("hello_world/src/main.zig");
-        const exe = b.addExecutable("hello_world", helloWorldBuildRoot);
+    const exe = b.addExecutable("hello_world", helloWorldBuildRoot);
     exe.setTarget(target);
     exe.setBuildMode(mode);
+
+    // link libraries passed in from ikuy
+    var libIt = libs.iterator();
+    while (libIt.next()) |kv| {
+        kv.value_ptr.link(kv.value_ptr, b, exe);
+    }
+
     exe.install();
 
     const run_cmd = exe.run();
