@@ -18,4 +18,4 @@ dependencies: []
 actions:
  - fetch git git@github.com:DeanoC/ikuy.base.git
 
-zigLink: 
+zig: 
