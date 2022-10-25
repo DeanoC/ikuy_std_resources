@@ -1,8 +1,6 @@
 const std = @import("std");
 const Library = @import("../libs/library.zig").Library;
 
-const Pkg = std.build.Pkg;
-
 pub fn build(b: *std.build.Builder, libs: std.StringHashMap(Library)) void {
     // Standard target options allows the person running `zig build` to choose
     // what target to build for. Here we do not override the defaults, which
