@@ -12,7 +12,7 @@ builder:
 # libraries to be linked into this peice of software
 libraries:
  - base
-
+ - zigsdl2
 # non library dependencies (like host programs, asset processing etc.)
 dependencies: []
 
