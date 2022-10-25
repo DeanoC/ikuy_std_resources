@@ -2,7 +2,8 @@ const std = @import("std");
 
 pub const Library = struct {
     link: *const fn (lib: *const Library, b: *std.build.Builder, exe: *std.build.LibExeObjStep) void = &basicLink,
-    package: std.build.Pkg,
+    name: []const u8,
+    path: []const u8,
 };
 
 pub fn sdkPath(comptime suffix: []const u8) []const u8 {
@@ -14,5 +15,6 @@ pub fn sdkPath(comptime suffix: []const u8) []const u8 {
 }
 
 fn basicLink(lib: *const Library, _: *std.build.Builder, exe: *std.build.LibExeObjStep) void {
-    exe.addPackage(lib.package);
+    const pkg = std.build.Pkg{ .name = lib.name, .source = .{ .path = lib.path } };
+    exe.addPackage(pkg);
 }

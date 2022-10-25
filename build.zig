@@ -12,7 +12,7 @@ fn sdl2Link(_: *const Library, b: *std.build.Builder, exe: *std.build.LibExeObjS
 
 pub fn build(b: *std.build.Builder) !void {
     var libraryPackages = std.StringHashMap(Library).init(b.allocator);
-    try libraryPackages.put("sdl2", Library{ .link = &sdl2Link, .package = std.build.Pkg{ .name = "sdl2", .source = .{ .path = sdkPath("/libs/SDL.zig/Sdk.zig") } } });
+    try libraryPackages.put("sdl2", Library{ .link = &sdl2Link, .name = "sdl2", .path = sdkPath("/libs/SDL.zig/Sdk.zig") });
 
     helloWorldBuild.build(b, libraryPackages);
 }
