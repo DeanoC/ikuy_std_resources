@@ -17,5 +17,5 @@ dependencies: []
 
 actions:
  - fetch git git@github.com:DeanoC/ikuy.base.git
- - zig library
- - cmake library
+
+zigLink: 
