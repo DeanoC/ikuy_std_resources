@@ -16,7 +16,7 @@ libraries: []
 dependencies: [] 
 
 actions:
- - fetch git git@github.com:MasterQ32/SDL.zig.git
+ - fetch git git@github.com:MasterQ32/SDL.zig.git master
 
 zigLink: >
   fn sdl2Link(_: *const Library, b: *std.build.Builder, exe: *std.build.LibExeObjStep) void {
