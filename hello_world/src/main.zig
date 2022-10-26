@@ -1,15 +1,23 @@
 const std = @import("std");
-const SDL = @import("sdl2");
+const sdl = @import("sdl2");
+const VFile = @import("vfile.zig").VFile;
+const VFileMemory = @import("vfile_memory.zig").VFileMemory;
 
 pub fn main() !void {
-    try SDL.init(.{
+    try sdl.init(.{
         .video = true,
         .events = true,
         .audio = true,
     });
-    defer SDL.quit();
+    defer sdl.quit();
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    const allocator = gpa.allocator();
+    var vfilemem: VFileMemory = try VFileMemory.initFromSize(allocator, 100);
+    var v: *VFile = &(vfilemem).vfile;
+    //    v.write()
+    defer v.close(v);
 
-    var window = try SDL.createWindow(
+    var window = try sdl.createWindow(
         "SDL2 Wrapper Demo",
         .{ .centered = {} },
         .{ .centered = {} },
@@ -19,11 +27,11 @@ pub fn main() !void {
     );
     defer window.destroy();
 
-    var renderer = try SDL.createRenderer(window, null, .{ .accelerated = true });
+    var renderer = try sdl.createRenderer(window, null, .{ .accelerated = true });
     defer renderer.destroy();
 
     mainLoop: while (true) {
-        while (SDL.pollEvent()) |ev| {
+        while (sdl.pollEvent()) |ev| {
             switch (ev) {
                 .quit => break :mainLoop,
                 else => {},
