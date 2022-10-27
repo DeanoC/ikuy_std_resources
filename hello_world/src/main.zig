@@ -12,10 +12,10 @@ pub fn main() !void {
     defer sdl.quit();
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     const allocator = gpa.allocator();
-    var vfilemem: VFileMemory = try VFileMemory.initFromSize(allocator, 100);
+    var vfilemem: VFileMemory = try VFileMemory.initFromSize(allocator, 100, false);
     var v: *VFile = &(vfilemem).vfile;
     //    v.write()
-    defer v.close(v);
+    defer v.close();
 
     var window = try sdl.createWindow(
         "SDL2 Wrapper Demo",
