@@ -9,7 +9,7 @@ pub const VFileMemory = struct {
 
     allocator: ?std.mem.Allocator,
     memory: []u8,
-    offset: usize,
+    offset: u64,
     growable: bool,
 
     vfile: VFile,
@@ -21,10 +21,11 @@ pub const VFileMemory = struct {
             .flushFn = flush,
             .readFn = read,
             .writeFn = write,
-            .seekFn = seek,
+            .seekFromStartFn = seekFromStart,
+            .seekFromCurrentFn = seekFromCurrent,
+            .seekFromEndFn = seekFromEnd,
             .tellFn = tell,
             .byteCountFn = byteCount,
-            .nameFn = name,
             .endOfFileFn = endOfFile,
         };
     }
@@ -72,7 +73,7 @@ pub const VFileMemory = struct {
         if (self.allocator) |allocator| allocator.free(self.memory);
     }
 
-    fn flush(_: *VFile) void {}
+    fn flush(_: *VFile) anyerror!void {}
 
     fn read(vfile: *VFile, buffer: []u8) anyerror!usize {
         assert(vfile.fileType == MemoryType);
@@ -104,22 +105,40 @@ pub const VFileMemory = struct {
         return amount_to_write;
     }
 
-    fn seek(vfile: *VFile, offset: u64, dir: VFile.SeekDir) anyerror!void {
+    fn seekFromStart(vfile: *VFile, offset: u64) anyerror!void {
         assert(vfile.fileType == MemoryType);
         const self = @fieldParentPtr(VFileMemory, "vfile", vfile);
-        switch (dir) {
-            VFile.SeekDir.Begin => {
-                if (offset >= self.memory.len) return VFileError.SeekError;
-                self.offset = offset;
-            },
-            VFile.SeekDir.Current => {
-                if (self.offset + offset > self.memory.len) return VFileError.SeekError;
-                self.offset = self.offset + offset;
-            },
-            VFile.SeekDir.End => {
-                if (offset > self.memory.len) return VFileError.SeekError;
-                self.offset = self.memory.len - offset;
-            },
+        if (offset >= self.memory.len) return VFileError.SeekError;
+        self.offset = offset;
+    }
+    fn seekFromCurrent(vfile: *VFile, offset: i64) anyerror!void {
+        assert(vfile.fileType == MemoryType);
+        const self = @fieldParentPtr(VFileMemory, "vfile", vfile);
+
+        // we can't support the full offset range
+        if(offset < 0) {
+            const o = @truncate(u64, @intCast(u64,-offset));
+            if(o > self.offset) return VFileError.SeekError;
+            self.offset = self.offset - o;
+        } else {
+            const o = @truncate(u64, @intCast(u64, offset));
+            if(self.offset + o > self.memory.len) return VFileError.SeekError;
+            self.offset = self.offset + o;
+        }
+    }
+    fn seekFromEnd(vfile: *VFile, offset: i64) anyerror!void {
+        assert(vfile.fileType == MemoryType);
+        const self = @fieldParentPtr(VFileMemory, "vfile", vfile);
+
+        // we can't support the full offset range
+        if(offset <= 0) {
+            const o = @truncate(u64, @intCast(u64,-offset));
+            if(o > self.memory.len) return VFileError.SeekError;
+            self.offset = self.memory.len - o;
+        } else {
+            // technically posix allows to seek beyond the end of a file
+            // we don't support that, but could if needed (grow the buffer)
+            return VFileError.SeekError;
         }
     }
 
@@ -133,10 +152,6 @@ pub const VFileMemory = struct {
         assert(vfile.fileType == MemoryType);
         const self = @fieldParentPtr(VFileMemory, "vfile", vfile);
         return self.memory.len;
-    }
-
-    fn name(_: *VFile) []const u8 {
-        return "MEMORY";
     }
 
     fn endOfFile(vfile: *VFile) anyerror!bool {
@@ -158,11 +173,6 @@ var fancy_array = init: {
     break :init initial_value;
 };
 
-test "comptime array" {
-    for (fancy_array) |v, i| {
-        try expectEqual(fancy_array[i], v);
-    }
-}
 test "init" {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     const allocator = gpa.allocator();
@@ -194,7 +204,7 @@ test "endOfFule" {
     var v: *VFile = &(vfilemem).vfile;
     defer v.close();
     try expectEqual(try v.endOfFile(), false);
-    try v.seek(3, VFile.SeekDir.Begin);
+    try v.seekFromStart(3);
     try expectEqual(try v.endOfFile(), true);
 }
 
@@ -227,24 +237,24 @@ test "seek vfile memory" {
     var vfilemem: VFileMemory = try VFileMemory.initFromSize(allocator, 100, false);
     var v: *VFile = &(vfilemem).vfile;
     try expectEqual(try v.write(&fancy_array), 10);
-    try v.seek(0, VFile.SeekDir.Begin);
+    try v.seekFromStart(0);
     try expectEqual(try v.tell(), 0);
-    try v.seek(10, VFile.SeekDir.Begin);
+    try v.seekFromStart(10);
     try expectEqual(try v.tell(), 10);
     try expectError(
         VFileError.SeekError,
-        v.seek(100, VFile.SeekDir.Begin),
+        v.seekFromStart(100),
     );
     // the above seek will fail so the tell should be same as before
     try expectEqual(try v.tell(), 10);
-    try v.seek(0, VFile.SeekDir.Begin);
-    try v.seek(10, VFile.SeekDir.Current);
+    try v.seekFromStart(0);
+    try v.seekFromCurrent(10);
     try expectEqual(try v.tell(), 10);
-    try v.seek(10, VFile.SeekDir.Current);
+    try v.seekFromCurrent(10);
     try expectEqual(try v.tell(), 20);
-    try v.seek(0, VFile.SeekDir.End);
+    try v.seekFromEnd(0);
     try expectEqual(try v.tell(), 100);
-    try v.seek(10, VFile.SeekDir.End);
+    try v.seekFromEnd(-10);
     try expectEqual(try v.tell(), 90);
 }
 
@@ -255,7 +265,7 @@ test "read vfile memory" {
     var v: *VFile = &(vfilemem).vfile;
     defer v.close();
     try expectEqual(try v.write(&fancy_array), 10);
-    try expectEqual(try v.seek(0, VFile.SeekDir.Begin), 0);
+    try expectEqual(try v.seekFromStart(0), 0);
 
     var read10: [10]u8 = undefined;
     try expectEqual(try v.read(&read10), 10);
@@ -276,7 +286,7 @@ test "growablility" {
     try expectEqual(try v.write(&buffer), 4);
     var dst_buffer = [_]u8 {0} ** 4;
     try expectError(VFileError.ReadError, v.read(&dst_buffer));
-    try v.seek(0, VFile.SeekDir.Begin);
+    try v.seekFromStart(0);
 
     try expectEqual(try v.read(&dst_buffer), 4);
     for (dst_buffer) |value, i| {
