@@ -1,4 +1,4 @@
-name: zigsdl2
+name: sdl2
 
 boards: 
  - host
@@ -21,8 +21,8 @@ actions:
 zig:
   link: |
     fn sdl2Link(_: *const Library, b: *std.build.Builder, exe: *std.build.LibExeObjStep) void {
-      const sdl2 = @import("libs/${lib_name}/Sdk.zig");
-      const sdk = sdl2.init(b);
-      sdk.link(exe, .dynamic);
-      exe.addPackage(sdk.getWrapperPackage("sdl2"));
+        const sdl2 = @import("libs/${lib_name}/Sdk.zig");
+        const sdk = sdl2.init(b);
+        sdk.link(exe, .dynamic);
+        exe.addPackage(sdk.getWrapperPackage("sdl2"));
     }
