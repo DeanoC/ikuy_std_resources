@@ -24,5 +24,6 @@ zig:
         const sokolBuild = @import("libs/sokol/build.zig");
         const sokol = sokolBuild.buildSokol(b, exe.target, b.standardReleaseOptions(), sokolBuild.Backend.auto, "libs/sokol/");
         exe.linkLibrary(sokol);
-        Library.basicLink(lib, b, exe);
+        const pkg = std.build.Pkg{ .name = lib.name, .source = .{ .path = sdkPath("/sokol/src/sokol/sokol.zig") } };
+        exe.addPackage(pkg);
     }
