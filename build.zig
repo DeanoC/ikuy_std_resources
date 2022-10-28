@@ -7,19 +7,11 @@ const sdkPath = @import("libs/library.zig").sdkPath;
 
 const hello_world = @import("hello_world/ikuy_build.zig");
 
-fn sdl2Link(_: *const Library, b: *std.build.Builder, exe: *std.build.LibExeObjStep) void {
-  const sdl2 = @import("libs/zigsdl2/Sdk.zig");
-  const sdk = sdl2.init(b);
-  sdk.link(exe, .dynamic);
-  exe.addPackage(sdk.getWrapperPackage("sdl2"));
-}
-
 
 
 pub fn build(b: *std.build.Builder) !void {
   var libraryPackages = std.StringHashMap(Library).init(b.allocator);
   try libraryPackages.put("base", Library{ .name = "base", .path = sdkPath("/base/build.zig") });
-  try libraryPackages.put("zigsdl2", Library{ .link = &sdl2Link, .name = "zigsdl2", .path = sdkPath("/zigsdl2/build.zig") });
 
   hello_world.build(b, libraryPackages);
 }

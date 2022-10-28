@@ -12,7 +12,8 @@ builder:
 # libraries to be linked into this peice of software
 libraries:
  - base
- - zigsdl2
+ - sdl2-zig
+ - sokol-zig
  
 # non library dependencies (like host programs, asset processing etc.)
 dependencies: []
