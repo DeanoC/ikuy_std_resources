@@ -19,3 +19,10 @@ actions:
  - fetch git git@github.com:floooh/sokol-zig.git master
 
 zig:
+  link: |
+    fn sokolLink(lib: *const Library, b: *std.build.Builder, exe: *std.build.LibExeObjStep) void {
+        const sokolBuild = @import("libs/sokol/build.zig");
+        const sokol = sokolBuild.buildSokol(b, exe.target, b.standardReleaseOptions(), sokolBuild.Backend.auto, "libs/sokol/");
+        exe.linkLibrary(sokol);
+        Library.basicLink(lib, b, exe);
+    }
