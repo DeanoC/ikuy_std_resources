@@ -1,16 +1,21 @@
-const std = @import("std");
-const sokol = @import("sokol");
-const sapp = sokol.app;
-const sg = sokol.gfx;
-const sgapp = sokol.app_gfx_glue;
+//------------------------------------------------------------------------------
+//  clear.zig
+//
+//  Just clear the framebuffer with an animated color.
+//------------------------------------------------------------------------------
+const sg    = @import("sokol").gfx;
+const sapp  = @import("sokol").app;
+const sgapp = @import("sokol").app_gfx_glue;
 const print = @import("std").debug.print;
 
 var pass_action: sg.PassAction = .{};
 
 export fn init() void {
-    sg.setup(.{ .context = sgapp.context() });
-    pass_action.colors[0] = .{ .action = .CLEAR, .value = .{ .r = 1, .g = 1, .b = 0, .a = 1 } };
-    print("Backend: {s}\n", .{sg.queryBackend()});
+    sg.setup(.{
+        .context = sgapp.context()
+    });
+    pass_action.colors[0] = .{ .action=.CLEAR, .value=.{ .r=1, .g=1, .b=0, .a=1 } };
+    print("Backend: {s}\n", .{ sg.queryBackend()});
 }
 
 export fn frame() void {
