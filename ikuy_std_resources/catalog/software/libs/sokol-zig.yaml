@@ -16,7 +16,7 @@ libraries: []
 dependencies: [] 
 
 actions:
- - fetch git git@github.com:floooh/sokol-zig.git master
+ - fetch git git@github.com:floooh/sokol-zig.git zig-0.10.0
 
 zig:
   link: |
