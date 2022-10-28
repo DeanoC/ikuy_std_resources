@@ -1,4 +1,4 @@
-name: zigsdl2
+name: sdl2
 
 boards: 
  - host
