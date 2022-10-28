@@ -1,0 +1,29 @@
+name: sokol
+
+boards: 
+ - host
+
+cpus:
+ - host
+
+builder: 
+ - zig
+
+# libraries to be linked into this peice of software
+libraries: []
+
+# non library dependencies (like host programs, asset processing etc.)
+dependencies: [] 
+
+actions:
+ - fetch git git@github.com:floooh/sokol-zig.git master
+
+zig:
+  link: |
+    fn sokolLink(lib: *const Library, b: *std.build.Builder, exe: *std.build.LibExeObjStep) void {
+        const sokolBuild = @import("libs/sokol/build.zig");
+        const sokol = sokolBuild.buildSokol(b, exe.target, b.standardReleaseOptions(), sokolBuild.Backend.auto, "libs/sokol/");
+        exe.linkLibrary(sokol);
+        const pkg = std.build.Pkg{ .name = lib.name, .source = .{ .path = sdkPath("/sokol/src/sokol/sokol.zig") } };
+        exe.addPackage(pkg);
+    }
