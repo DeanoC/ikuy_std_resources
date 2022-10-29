@@ -7,11 +7,20 @@ const sdkPath = @import("libs/library.zig").sdkPath;
 
 const hello_world = @import("hello_world/ikuy_build.zig");
 
+fn sokolLink(lib: *const Library, b: *std.build.Builder, exe: *std.build.LibExeObjStep) void {
+    const sokolBuild = @import("libs/sokol/build.zig");
+    const sokol = sokolBuild.buildSokol(b, exe.target, b.standardReleaseOptions(), sokolBuild.Backend.auto, "libs/sokol/");
+    exe.linkLibrary(sokol);
+    const pkg = std.build.Pkg{ .name = lib.name, .source = .{ .path = sdkPath("/sokol/src/sokol/sokol.zig") } };
+    exe.addPackage(pkg);
+}
 
 
 pub fn build(b: *std.build.Builder) !void {
   var libraryPackages = std.StringHashMap(Library).init(b.allocator);
   try libraryPackages.put("base", Library{ .name = "base", .path = sdkPath("/base/build.zig") });
+  try libraryPackages.put("tiny_imageformat", Library{ .name = "tiny_imageformat", .path = sdkPath("/tiny_imageformat/build.zig") });
+  try libraryPackages.put("sokol", Library{ .link = &sokolLink, .name = "sokol", .path = sdkPath("/sokol/build.zig") });
 
   hello_world.build(b, libraryPackages);
 }
