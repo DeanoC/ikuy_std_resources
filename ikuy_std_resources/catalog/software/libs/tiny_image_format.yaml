@@ -1,4 +1,4 @@
-name: tiny_image_format
+name: tiny_imageformat
 
 boards: 
  - host
@@ -16,6 +16,6 @@ libraries: []
 dependencies: [] 
 
 actions:
- - fetch git 
+ - fetch git git@github.com:DeanoC/tiny_imageformat.git zig
 
 zig:
