@@ -1,4 +1,4 @@
-name: hello_world
+name: tiny_imageformat
 
 boards: 
  - host
@@ -10,12 +10,12 @@ builder:
  - zig
 
 # libraries to be linked into this peice of software
-libraries:
- - base
- - sokol-zig
- - tiny_imageformat-zig
- 
-# non library dependencies (like host programs, asset processing etc.)
-dependencies: []
+libraries: []
 
-actions: []
+# non library dependencies (like host programs, asset processing etc.)
+dependencies: [] 
+
+actions:
+ - fetch git git@github.com:DeanoC/tiny_imageformat.git zig
+
+zig:
