@@ -6,11 +6,13 @@ const sdkPath = @import("libs/library.zig").sdkPath;
 const hello_world = @import("hello_world/ikuy_build.zig");
 
 pub fn tiny_imageformatLink(lib: *const Library, b: *std.build.Builder, exe: *std.build.LibExeObjStep) void {
-    const format_gen_build = @import("libs/tiny_imageformat/build.zig");
-    const format_gen = format_gen_build.buildFormatGen(b, exe.target, b.standardReleaseOptions(), "libs/tiny_imageformat/");
+    const base_dir = "libs/tiny_imageformat/";
+    const main_path = base_dir ++ "build.zig";
+    const format_gen_build = @import("libs/tiny_imageformat/package_main.zig");
+    const format_gen = format_gen_build.buildFormatGen(b, exe.target, b.standardReleaseOptions(), base_dir);
     exe.step.dependOn(&format_gen.step);
 
-    const pkg = std.build.Pkg{ .name = lib.name, .source = .{ .path = lib.path } };
+    const pkg = std.build.Pkg{ .name = lib.name, .source = .{ .path = main_path } };
     exe.addPackage(pkg);
 }
 
@@ -24,7 +26,6 @@ fn sokolLink(lib: *const Library, b: *std.build.Builder, exe: *std.build.LibExeO
 
 pub fn build(b: *std.build.Builder) !void {
     var libraryPackages = std.StringHashMap(Library).init(b.allocator);
-    try libraryPackages.put("base", Library{ .name = "base", .path = sdkPath("/base/build.zig") });
     try libraryPackages.put("tiny_imageformat", Library{ .link = &tiny_imageformatLink, .name = "tiny_imageformat", .path = sdkPath("/tiny_imageformat/build.zig") });
     try libraryPackages.put("sokol", Library{ .link = &sokolLink, .name = "sokol", .path = sdkPath("/sokol/build.zig") });
 
