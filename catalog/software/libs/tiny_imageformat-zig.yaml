@@ -11,7 +11,7 @@ builder:
 
 # libraries to be linked into this peice of software
 libraries: 
- - vfile-zig
+ - vfile
 
 # non library dependencies (like host programs, asset processing etc.)
 dependencies: [] 
