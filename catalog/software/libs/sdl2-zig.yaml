@@ -19,6 +19,7 @@ actions:
  - fetch git git@github.com:MasterQ32/SDL.zig.git master
 
 zig:
+    package_path: USE_LINK
     link: |4
         const sdl2 = @import("libs/${lib_name}/Sdk.zig");
         const sdk = sdl2.init(builder);
