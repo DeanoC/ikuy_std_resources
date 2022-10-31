@@ -21,6 +21,6 @@ actions:
 zig:
     link: |4
         const sdl2 = @import("libs/${lib_name}/Sdk.zig");
-        const sdk = sdl2.init(b);
-        sdk.link(exe, .dynamic);
-        exe.addPackage(sdk.getWrapperPackage("sdl2"));
+        const sdk = sdl2.init(builder);
+        sdk.link(executable, .dynamic);
+        executable.addPackage(sdk.getWrapperPackage("sdl2"));
