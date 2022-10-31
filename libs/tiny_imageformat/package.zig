@@ -17,25 +17,34 @@ pub const tiny_imageformat = @cImport({
     @cInclude(sdkPath("/include/tiny_imageformat/tinyimageformat_encode.h"));
     //    @cInclude(sdkPath("/include/tiny_imageformat/tinyimageformat_decode.h"));
 });
+//
+// pub fn buildFormatGen(b: *Builder, target: CrossTarget, mode: Mode, comptime prefix_path: []const u8) *std.build.LibExeObjStep {
+//     var exe = b.addExecutable("tiny_imageformatgen", null);
+
+//     const src_path = prefix_path ++ "src/";
+//     const csources = [_][]const u8{
+//         "formatgen.cpp",
+//         "formatgen_apis.cpp",
+//         "formatgen_base.cpp",
+//         "formatgen_decode.cpp",
+//         "formatgen_encode.cpp",
+//         "formatgen_query.cpp",
+//     };
+//     inline for (csources) |csrc| {
+//         exe.addCSourceFile(src_path ++ csrc, &[_][]const u8{"-std=c++17"});
+//     }
+
+//     exe.setTarget(target);
+//     exe.setBuildMode(mode);
+//     exe.linkLibC();
+//     return exe;
+// }
 
 pub fn buildFormatGen(b: *Builder, target: CrossTarget, mode: Mode, comptime prefix_path: []const u8) *std.build.LibExeObjStep {
-    var exe = b.addExecutable("tiny_imageformatgen", null);
-
-    const src_path = prefix_path ++ "src/";
-    const csources = [_][]const u8{
-        "formatgen.cpp",
-        "formatgen_apis.cpp",
-        "formatgen_base.cpp",
-        "formatgen_decode.cpp",
-        "formatgen_encode.cpp",
-        "formatgen_query.cpp",
-    };
-    inline for (csources) |csrc| {
-        exe.addCSourceFile(src_path ++ csrc, &[_][]const u8{"-std=c++17"});
-    }
-
+    const format_gen_root = b.pathFromRoot(prefix_path ++ "src/formatgen.zig");
+    var exe = b.addExecutable("tiny_image_formatgen", format_gen_root);
     exe.setTarget(target);
     exe.setBuildMode(mode);
-    exe.linkLibC();
+    exe.install();
     return exe;
 }

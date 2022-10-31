@@ -10,7 +10,8 @@ builder:
  - zig
 
 # libraries to be linked into this peice of software
-libraries: []
+libraries: 
+ - vfile-zig
 
 # non library dependencies (like host programs, asset processing etc.)
 dependencies: [] 
@@ -21,10 +22,9 @@ actions:
 zig:
     link: |4
         const base_dir = "libs/tiny_imageformat/";
-        const main_path = base_dir ++ "package_main.zig";
+        const main_path = base_dir ++ "package.zig";
         const format_gen_build = @import("libs/tiny_imageformat/package.zig");
         const format_gen = format_gen_build.buildFormatGen(builder, executable.target, builder.standardReleaseOptions(), base_dir);
         executable.step.dependOn(&format_gen.step);
-
         const pkg = std.build.Pkg{ .name = library.name, .source = .{ .path = main_path } };
         executable.addPackage(pkg);
