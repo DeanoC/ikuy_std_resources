@@ -19,8 +19,8 @@ actions:
  - fetch git git@github.com:MasterQ32/SDL.zig.git master
 
 zig:
-    link: |4
-            const sdl2 = @import("libs/${lib_name}/Sdk.zig");
-            const sdk = sdl2.init(b);
-            sdk.link(exe, .dynamic);
-            exe.addPackage(sdk.getWrapperPackage("sdl2"));
+    link: |
+    const sdl2 = @import("libs/${lib_name}/Sdk.zig");
+    const sdk = sdl2.init(b);
+    sdk.link(exe, .dynamic);
+    exe.addPackage(sdk.getWrapperPackage("sdl2"));
