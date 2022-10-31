@@ -19,6 +19,6 @@ actions:
  - fetch git git@github.com:DeanoC/ltngt-vfile.git zig
 
 zig:
-    link: |
+    link: |4
         const pkg = std.build.Pkg{ .name = lib.name, .source = .{ .path = sdkPath("/vfile/package_main.zig" } };
         exe.addPackage(pkg);
