@@ -20,5 +20,5 @@ actions:
 
 zig:
     link: |4
-        const pkg = std.build.Pkg{ .name = lib.name, .source = .{ .path = sdkPath("/vfile/package_main.zig" } };
+        const pkg = std.build.Pkg{ .name = lib.name, .source = .{ .path = sdkPath("/vfile/package_main.zig") } };
         exe.addPackage(pkg);
