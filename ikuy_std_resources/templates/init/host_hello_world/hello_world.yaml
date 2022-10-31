@@ -1,0 +1,20 @@
+name: hello_world
+
+boards: 
+ - host
+
+cpus:
+ - host
+
+source: 
+# - cpp
+#  - src/*.cpp
+ - zig
+
+# libraries to be linked into this peice of software
+libraries:
+ - host_os
+
+# non library dependencies (like host programs, asset processing etc.)
+dependencies: 
+ - 
