@@ -19,3 +19,7 @@ actions:
  - fetch git git@github.com:DeanoC/ltngt.vfile.git main
 
 zig:
+  library_import: 
+  library_package: executable.addPackage(std.build.Pkg{ .name = library.name, .source = .{ .path = sdkPath("vfile/package.zig") } });
+  library_link:
+
