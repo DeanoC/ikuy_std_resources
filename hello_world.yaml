@@ -13,6 +13,7 @@ builder:
 libraries:
  - sokol-zig
  - tiny_imageformat-zig
+ - vfile-zig
  
 # non library dependencies (like host programs, asset processing etc.)
 dependencies: []

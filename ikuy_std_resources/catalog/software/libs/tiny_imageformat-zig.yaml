@@ -20,7 +20,6 @@ actions:
 
 zig:
     link: |
-        pub fn tiny_imageformatLink(lib: *const Library, b: *std.build.Builder, exe: *std.build.LibExeObjStep) void {
             const base_dir = "libs/tiny_imageformat/";
             const main_path = base_dir ++ "package_main.zig";
             const format_gen_build = @import("libs/tiny_imageformat/package_main.zig");
@@ -29,4 +28,3 @@ zig:
 
             const pkg = std.build.Pkg{ .name = lib.name, .source = .{ .path = main_path } };
             exe.addPackage(pkg);
-        }

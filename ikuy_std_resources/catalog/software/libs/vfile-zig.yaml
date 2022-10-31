@@ -16,15 +16,9 @@ libraries: []
 dependencies: [] 
 
 actions:
- - fetch git git@github.com:DeanoC/tiny_imageformat.git zig
+ - fetch git git@github.com:DeanoC/ltngt-vfile.git zig
 
 zig:
-  link: |
-    pub fn tiny_imageformatLink(lib: *const Library, b: *std.build.Builder, exe: *std.build.LibExeObjStep) void {
-        const format_gen_build = @import("libs/tiny_imageformat/build.zig");
-        const format_gen = format_gen_build.buildFormatGen(b, exe.target, b.standardReleaseOptions(), "libs/tiny_imageformat/");
-        exe.step.dependOn(&format_gen.step);
-
-        const pkg = std.build.Pkg{ .name = lib.name, .source = .{ .path = lib.path } };
-        exe.addPackage(pkg);
-    }
+    link: |
+            const pkg = std.build.Pkg{ .name = lib.name, .source = .{ .path = sdkPath("/vfile/package_main.zig" } };
+            exe.addPackage(pkg);
