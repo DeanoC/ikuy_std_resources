@@ -17,7 +17,7 @@ dependencies: []
 
 actions:
  - fetch git git@github.com:DeanoC/ltngt-vfile.git zig
-S
+
 zig:
     link: |
         const pkg = std.build.Pkg{ .name = lib.name, .source = .{ .path = sdkPath("/vfile/package_main.zig" } };
