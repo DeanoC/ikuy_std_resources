@@ -9,6 +9,7 @@ const sgl = @import("sokol").gl;
 const sgapp = @import("sokol").app_gfx_glue;
 const math = @import("std").math;
 const tiny_imageformat = @import("tiny_imageformat").tiny_imageformat;
+const vfile = @import("vfile");
 
 const state = struct {
     var pass_action: sg.PassAction = .{};
@@ -28,6 +29,7 @@ const state = struct {
 
 export fn init() void {
     _ = tiny_imageformat.TinyImageFormat;
+    _ = vfile.VFileFile;
     // setup sokol-gfx
     sg.setup(.{ .context = sgapp.context() });
     // setup sokol-gl
