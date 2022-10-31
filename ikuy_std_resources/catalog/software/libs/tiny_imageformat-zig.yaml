@@ -19,7 +19,7 @@ actions:
  - fetch git git@github.com:DeanoC/tiny_imageformat.git zig
 
 zig:
-    link: |
+    link: |4
             const base_dir = "libs/tiny_imageformat/";
             const main_path = base_dir ++ "package_main.zig";
             const format_gen_build = @import("libs/tiny_imageformat/package_main.zig");
