@@ -23,7 +23,7 @@ zig:
         const base_dir = "libs/tiny_imageformat/";
         const main_path = base_dir ++ "package_main.zig";
         const format_gen_build = @import("libs/tiny_imageformat/package_main.zig");
-        const format_gen = format_gen_build.buildFormatGen(b, executable.target, builder.standardReleaseOptions(), base_dir);
+        const format_gen = format_gen_build.buildFormatGen(builder, executable.target, builder.standardReleaseOptions(), base_dir);
         executable.step.dependOn(&format_gen.step);
 
         const pkg = std.build.Pkg{ .name = library.name, .source = .{ .path = main_path } };
