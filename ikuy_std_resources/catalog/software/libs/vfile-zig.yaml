@@ -16,7 +16,7 @@ libraries: []
 dependencies: [] 
 
 actions:
- - fetch git git@github.com:DeanoC/ltngt-vfile.git main
+ - fetch git git@github.com:DeanoC/ltngt.vfile.git main
 
 zig:
     link: |4
