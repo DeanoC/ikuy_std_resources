@@ -1,0 +1,26 @@
+name: sdl2
+
+boards: 
+ - host
+
+cpus:
+ - host
+
+builder: 
+ - zig
+
+# libraries to be linked into this peice of software
+libraries: []
+
+# non library dependencies (like host programs, asset processing etc.)
+dependencies: [] 
+
+actions:
+ - fetch git git@github.com:MasterQ32/SDL.zig.git master
+
+zig:
+    link: |
+            const sdl2 = @import("libs/${lib_name}/Sdk.zig");
+            const sdk = sdl2.init(b);
+            sdk.link(exe, .dynamic);
+            exe.addPackage(sdk.getWrapperPackage("sdl2"));
