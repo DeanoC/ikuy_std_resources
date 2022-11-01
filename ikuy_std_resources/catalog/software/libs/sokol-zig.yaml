@@ -19,8 +19,8 @@ actions:
  - fetch git git@github.com:floooh/sokol-zig.git zig-0.10.0
 
 zig:
-    package_path: sokol/src/sokol/sokol.zig
-    link: |4
-        const sokolBuild = @import("libs/sokol/build.zig");
+    library_import: libs/sokol/build.zig
+    library_package: executable.addPackage(std.build.Pkg{ .name = library.name, .source = .{ .path = sdkPath("sokol/src/sokol/sokol.zig") } });
+    library_link: |4
         const sokol = sokolBuild.buildSokol(builder, executable.target, builder.standardReleaseOptions(), sokolBuild.Backend.auto, "libs/sokol/");
         executable.linkLibrary(sokol);
