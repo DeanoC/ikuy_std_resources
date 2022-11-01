@@ -12,7 +12,7 @@ builder:
 # libraries to be linked into this peice of software
 libraries: []
 
-# non library dependencies (like host programs, asset processing etc.)
+# non library dependencies (like programs, asset processing etc.)
 dependencies: [] 
 
 actions:
