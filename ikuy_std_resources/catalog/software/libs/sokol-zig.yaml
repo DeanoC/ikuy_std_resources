@@ -21,4 +21,4 @@ actions:
 zig:
     library_import: libs/sokol/build.zig
     library_package: 
-    library_link: executable.linkLibrary(sokolBuild.buildSokol(builder, executable.target, builder.standardReleaseOptions(), sokolBuild.Backend.auto, "libs/sokol/"););
+    library_link: executable.linkLibrary(sokolBuild.buildSokol(builder, executable.target, builder.standardReleaseOptions(), sokolBuild.Backend.auto, "libs/sokol/"));
