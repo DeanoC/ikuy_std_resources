@@ -22,4 +22,6 @@ actions:
 zig:
     library_import: libs/tiny_image_format/package.zig
     library_package:
-    library_link: executable.step.dependOn(&tiny_image_format.buildFormatGen(builder, executable.target, builder.standardReleaseOptions(), "libs/tiny_image_format").step);
+    library_link: |0
+        const tiny_image_format = @import("libs/tiny_image_format/package.zig");
+        executable.step.dependOn(&tiny_image_format.buildFormatGen(builder, executable.target, builder.standardReleaseOptions(), "libs/tiny_image_format").step);
