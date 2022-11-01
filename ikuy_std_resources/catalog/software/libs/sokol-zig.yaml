@@ -22,5 +22,5 @@ zig:
     library_import: libs/sokol/build.zig
     library_package: 
     library_link: |
-    const sokol = @import("libs/sokol/build.zig");
-    executable.linkLibrary(sokol.buildSokol(builder, executable.target, builder.standardReleaseOptions(), sokol.Backend.auto, "libs/sokol/"));
+        const sokol = @import("libs/sokol/build.zig");
+        executable.linkLibrary(sokol.buildSokol(builder, executable.target, builder.standardReleaseOptions(), sokol.Backend.auto, "libs/sokol/"));
