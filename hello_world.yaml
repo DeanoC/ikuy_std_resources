@@ -12,7 +12,7 @@ builder:
 # libraries to be linked into this peice of software
 libraries:
  - sokol
- - tiny_imageformat
+ - tiny_image_format
  - vfile
  
 # non library dependencies (like host programs, asset processing etc.)
