@@ -12,6 +12,7 @@ builder:
 # libraries to be linked into this peice of software
 libraries: 
  - vfile
+ - zig_string
 
 # non library dependencies (like host programs, asset processing etc.)
 dependencies: [] 
@@ -22,7 +23,7 @@ actions:
 zig:
     library_import: libs/tiny_image_format/package.zig
     library_package: 
-    library_link: |
+    library_link: |4
         const tiny_image_format = @import("libs/tiny_image_format/package.zig");
         const format_gen = tiny_image_format.buildFormatGen(builder, executable.target, builder.standardReleaseOptions(), "libs/tiny_image_format");
         format_gen.addPackage(vfilePkg);
