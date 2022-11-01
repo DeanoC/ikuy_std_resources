@@ -1,5 +1,4 @@
 const std = @import("std");
-const Library = @import("../libs/library.zig").Library;
 
 pub fn build(b: *std.build.Builder) !*std.build.LibExeObjStep {
     const target = b.standardTargetOptions(.{});
