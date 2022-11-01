@@ -20,6 +20,10 @@ actions:
 
 zig:
   library_import: 
+<<<<<<< HEAD:ikuy_std_resources/catalog/software/libs/vfile-zig.yaml
   library_package: executable.addPackage(std.build.Pkg{ .name = library.name, .source = .{ .path = sdkPath("vfile/package.zig") } });
+=======
+  library_package:
+>>>>>>> eb9df6eed08996a3571ff12f8d74fa7a30facc05:catalog/software/libs/vfile-zig.yaml
   library_link:
 
