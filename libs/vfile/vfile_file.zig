@@ -50,6 +50,10 @@ pub const VFileFile = struct {
         };
     }
 
+    pub fn asVFile(self: *Self) *VFile {
+        return &self.vfile;
+    }
+
     fn closeFn(vfile: *VFile) void {
         assert(vfile.fileType == FileType);
         const self = @fieldParentPtr(VFileFile, "vfile", vfile);
@@ -191,7 +195,7 @@ test "initFromPath" {
     }
 
     var vfile_file = try VFileFile.initFromPath(std.fs.cwd(), "tmp/test2.txt", File.OpenFlags{});
-    var v = &vfile_file.vfile;
+    var v = vfile_file.asVFile();
     defer v.close();
     try v.seekFromStart(0);
     try expectEqual(try v.byteCount(), 10);

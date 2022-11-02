@@ -14,6 +14,7 @@ libraries:
  - sokol
  - tiny_image_format
  - vfile
+ - zig_gamedev_zgpu
  
 # non library dependencies (like host programs, asset processing etc.)
 dependencies: []

@@ -19,25 +19,8 @@ pub const tiny_imageformat = @cImport({
 });
 
 pub fn buildFormatGen(b: *Builder, target: CrossTarget, mode: Mode, comptime _: []const u8) *std.build.LibExeObjStep {
-    const helloWorldBuildRoot = b.pathFromRoot("libs/tiny_image_format/src/formatgen.zig");
-
-    var exe = b.addExecutable("tiny_imageformatgen", helloWorldBuildRoot);
-
-    // const src_path = prefix_path ++ "src/";
-    // const csources = [_][]const u8{
-    //     "formatgen.cpp",
-    //     "formatgen_apis.cpp",
-    //     "formatgen_base.cpp",
-    //     "formatgen_decode.cpp",
-    //     "formatgen_encode.cpp",
-    //     "formatgen_query.cpp",
-    // };
-    // inline for (csources) |csrc| {
-    //     exe.addCSourceFile(src_path ++ csrc, &[_][]const u8{"-std=c++17"});
-    // }
-
+    var exe = b.addExecutable("tiny_image_format_gen", b.pathFromRoot("libs/tiny_image_format/src/formatgen.zig"));
     exe.setTarget(target);
     exe.setBuildMode(mode);
-    exe.linkLibC();
     return exe;
 }

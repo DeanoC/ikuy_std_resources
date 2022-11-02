@@ -9,8 +9,30 @@ pub fn sdkPath(comptime suffix: []const u8) []const u8 {
     };
 }
 
+fn hasPackageBeenAdded(name: []const u8) bool {
+    for (packageAdded) |*package| {
+        if (std.mem.eql(u8, name, package.name)) {
+            if (package.added == false) {
+                package.added = true;
+                return false;
+            } else return true;
+        }
+    }
+
+    std.log.warn("Trying to add unknown package {s}", .{name});
+    return true;
+}
+
+// package double adding protector
+var packageAdded = [_]struct { name: []const u8, added: bool = false } {
+    .{ .name = "zig_string" },
+    .{ .name = "sokol" },
+    .{ .name = "vfile" },
+    .{ .name = "tiny_image_format" },
+};
 // Package definitions
-const sokolPkg = std.build.Pkg{ .name = "sokol", .source = .{ .path = sdkPath("libs/sokol/build.zig") } };
+const zig_stringPkg = std.build.Pkg{ .name = "zig_string", .source = .{ .path = sdkPath("libs/zig_string/zig-string.zig") } };
+const sokolPkg = std.build.Pkg{ .name = "sokol", .source = .{ .path = sdkPath("libs/sokol/src/sokol/sokol.zig") } };
 const vfilePkg = std.build.Pkg{ .name = "vfile", .source = .{ .path = sdkPath("libs/vfile/package.zig") } };
 const tiny_image_formatPkg = std.build.Pkg{ .name = "tiny_image_format", .source = .{ .path = sdkPath("libs/tiny_image_format/package.zig") } };
 
@@ -19,28 +41,29 @@ const hello_world = @import("hello_world/ikuy_build.zig");
 
 // link functions
 pub fn sokolLink(builder: *std.build.Builder, executable: *std.build.LibExeObjStep) void {
-     const sokol = @import("libs/sokol/build.zig");
-    executable.linkLibrary(sokol.buildSokol(builder, executable.target, builder.standardReleaseOptions(), sokol.Backend.auto, "libs/sokol/"));
-
-    executable.addPackage(sokolPkg);
-}
-
-pub fn vfileLink(_: *std.build.Builder, executable: *std.build.LibExeObjStep) void {
-    executable.addPackage(vfilePkg);
+const sokol = @import("libs/sokol/build.zig");
+executable.linkLibrary(sokol.buildSokol(builder, executable.target, builder.standardReleaseOptions(), sokol.Backend.auto, "libs/sokol/"));
+    if(!hasPackageBeenAdded("sokol")) executable.addPackage(sokolPkg);
 }
 
 pub fn tiny_image_formatLink(builder: *std.build.Builder, executable: *std.build.LibExeObjStep) void {
-     const tiny_image_format = @import("libs/tiny_image_format/package.zig");
-    executable.step.dependOn(&tiny_image_format.buildFormatGen(builder, executable.target, builder.standardReleaseOptions(), "libs/tiny_image_format").step);
-
-    executable.addPackage(vfilePkg);
-    executable.addPackage(tiny_image_formatPkg);
+    const tiny_image_format = @import("libs/tiny_image_format/package.zig");
+    const format_gen = tiny_image_format.buildFormatGen(builder, executable.target, builder.standardReleaseOptions(), "libs/tiny_image_format");
+    format_gen.addPackage(vfilePkg);
+    format_gen.addPackage(zig_stringPkg);
+    format_gen.install();
+    executable.step.dependOn(&format_gen.step);
+    if(!hasPackageBeenAdded("vfile")) executable.addPackage(vfilePkg);
+    if(!hasPackageBeenAdded("zig_string")) executable.addPackage(zig_stringPkg);
+    if(!hasPackageBeenAdded("tiny_image_format")) executable.addPackage(tiny_image_formatPkg);
 }
 
 // The actual build function
-pub fn build(builder: *std.build.Builder) !void {
+  pub fn build(builder: *std.build.Builder) !void {
     const hello_world_exe = try hello_world.build(builder);
+    if(!hasPackageBeenAdded("zig_string")) hello_world_exe.addPackage(zig_stringPkg);
     sokolLink(builder, hello_world_exe);
-    hello_world_exe.addPackage(vfilePkg);
+    if(!hasPackageBeenAdded("vfile")) hello_world_exe.addPackage(vfilePkg);
     tiny_image_formatLink(builder, hello_world_exe);
+    hello_world_exe.install();
 }

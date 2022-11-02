@@ -69,6 +69,10 @@ pub const VFileMemory = struct {
         };
     }
 
+    pub fn asVFile(self: *Self) *VFile {
+        return &self.vfile;
+    }
+
     fn closeFn(vfile: *VFile) void {
         assert(vfile.fileType == MemoryType);
         const self = @fieldParentPtr(VFileMemory, "vfile", vfile);
