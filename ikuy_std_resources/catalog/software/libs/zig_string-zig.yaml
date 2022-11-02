@@ -19,6 +19,6 @@ actions:
  - fetch git git@github.com:JakubSzark/zig-string.git master
 
 zig:
-    library_import: libs/zig-string/zig-string.zig
+    library_import: libs/${lib_name}/zig-string.zig
     library_package: 
     library_link: 
