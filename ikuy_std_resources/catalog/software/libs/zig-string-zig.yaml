@@ -1,4 +1,4 @@
-name: zig-string
+name: zig_string
 
 boards: 
  - host
@@ -22,4 +22,3 @@ zig:
     library_import: libs/zig-string/zig-string.zig
     library_package: 
     library_link: 
-    
