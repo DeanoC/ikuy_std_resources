@@ -14,7 +14,6 @@ libraries:
  - sokol
  - tiny_image_format
  - vfile
- - zig-string
  
 # non library dependencies (like host programs, asset processing etc.)
 dependencies: []
