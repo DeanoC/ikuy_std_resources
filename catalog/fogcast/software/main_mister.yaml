@@ -1,6 +1,7 @@
 program: main_mister
 actions:
   - emit_memory_map
+  - emit_build_adapter
 process:
   - name: emit_memory_map
     processor: templates
@@ -8,3 +9,10 @@ process:
     sources:
       - in: templates/main_mister_memory_map.h.in
         out: memory_map.h
+  - name: emit_build_adapter
+    processor: copy
+    sources:
+      - file: adapters/main_mister_build_adapter.sh
+        language: sh
+      - file: adapters/main_mister_build_manifest.yaml
+        language: yaml

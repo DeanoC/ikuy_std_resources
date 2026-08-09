@@ -1,0 +1,93 @@
+schema: fogcast.stage-a0.main-mister-build-adapter.v1
+status: explicit-adapter-review-required
+description: >-
+  Provenance-bound adapter contract for the Linux Main_MiSTer build. The
+  adapter is copied by Overlord for inspection; the Stage A0 first-build
+  runner is the authoritative network-disabled execution harness.
+source:
+  repository_id: mister-devel-main-mister
+  authority: https://github.com/DeanoC/Main_MiSTer.git
+  commit: d1a3a4e65c2dbee1f23eb5a890d8f29e6448c30d
+  tree: efb9c24e8e27945a75d8c497b4b99ec249129075
+  makefile_sha256: 28683c9d859353bc89880d5fcc6db520181cce7b38ed7b05f4a2bb601f125c42
+  tracked_file_count: 420
+  direct_source_file_count: 113
+source_globs:
+  - '*.c'
+  - '*.cpp'
+  - './lib/miniz/*.c'
+  - './lib/md5/*.c'
+  - './lib/lzma/*.c'
+  - './lib/zstd/lib/common/*.c'
+  - './lib/zstd/lib/decompress/*.c'
+  - './lib/libchdr/*.c'
+  - './lib/libco/arm.c'
+  - './lib/serial_server/library/*.cpp'
+  - './support/*/*.cpp'
+asset_inputs:
+  - path: logo.png
+    sha256: ebcc92cb180e5718102c34c0781eda9522207e49b961d681b8cddf50b427b78e
+prebuilt_inputs:
+  - path: lib/imlib2/libImlib2.so
+    sha256: 8745821f6936b3ccd75c7e3b546600edc0576093a9b14c7c17d1a322f40e8ae7
+  - path: lib/imlib2/libbz2.so
+    sha256: b630fc09d1e2f2072650419d37444b2fd90401cd63c0aac21e27422bf7ee122a
+  - path: lib/imlib2/libfreetype.so
+    sha256: e9237dd7ebc50df8c17d474da9846c414fdacab2dd2f811f8ebcc0765dad0aaa
+  - path: lib/imlib2/libpng16.so
+    sha256: 927e7f4d91b00e59fcf4cfa9802c75cb3a5186d5efdbdea3bebaeb1743aba951
+  - path: lib/imlib2/libz.so
+    sha256: 0f1286438b87d7449d67f7d056ea7da83fbb41818f0e5178c39090ce44ed2694
+  - path: lib/bluetooth/libbluetooth.so
+    sha256: 9cc252960ae8606d3d77249718126d33cddbad4ff1a82116b2929b88f22ba06a
+  - path: lib/serial_server/library
+    status: absent-at-pinned-source
+toolchain:
+  target: arm-none-linux-gnueabihf
+  archive_sha256: 102825ae56c9e00142d06f35d2bdd3299edb6060e84a275a25b095e66fd3fc2a
+  compiler: arm-none-linux-gnueabihf-gcc
+  linker: arm-none-linux-gnueabihf-ld
+  strip: arm-none-linux-gnueabihf-strip
+  version: 10.2.1
+container:
+  reference: stage-a0-firstbuild:debian12-arm102-v1
+  image_id: sha256:24045e0e800b0ce7df88076ccab628387b149f1bd0786fab46fffae07a859d0c
+  platform: linux/amd64
+build:
+  source_date_epoch: 1786215171
+  vdate: '260808'
+  jobs: 1
+  shell: /bin/bash -o pipefail
+  commands:
+    - make clean VDATE=260808 SHELL='/bin/bash -o pipefail' BUILDDIR=bin
+    - make V=1 VDATE=260808 SHELL='/bin/bash -o pipefail' BUILDDIR=bin
+  include_dirs:
+    - .
+    - lib/libco
+    - lib/miniz
+    - lib/md5
+    - lib/lzma
+    - lib/zstd/lib
+    - lib/libchdr/include
+    - lib/bluetooth
+    - lib/serial_server/library
+  link_flags:
+    - -lc
+    - -lstdc++
+    - -lm
+    - -lrt
+    - -Llib/imlib2
+    - -lfreetype
+    - -lbz2
+    - -lpng16
+    - -lz
+    - -lImlib2
+    - -Llib/bluetooth
+    - -lbluetooth
+    - -lpthread
+outputs:
+  - path: bin/MiSTer
+    sha256: f9e6fd646740449186b74821a3684686d5dbc7b33e28052e9de28b8f4c751f2e
+  - path: bin/MiSTer.elf
+    sha256: 51a9864bb12ebdf8961b30ac0a45d533fd2a2885a96d81fc29f8363d1804706d
+license_status: component-review-required

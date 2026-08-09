@@ -1,12 +1,12 @@
-name: cyclone_v_bridge_windows
-description: Observed Cyclone V HPS-to-FPGA bridge windows used by Main_MiSTer.
+name: cyclone_v_bridge_window
+description: Main_MiSTer bridge-window contract; the bank size is declared by register_window_size in the CPU definition.
 register:
-  - name: WINDOW
+  - name: CORE_WINDOW
     type: rw
     width: 32
     default: 0x00000000
     offset: 0x00000000
-    description: First word in an observed bridge window.
+    description: First word in an observed bridge window. Main maps the LWFPGASLAVES window through a 2 MiB aperture and the other bridge windows through 1 MiB apertures.
     field:
       - name: VALUE
         bits: "31:0"

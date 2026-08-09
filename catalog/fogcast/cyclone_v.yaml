@@ -13,27 +13,46 @@ definition:
 
   - type: cpu.arm.cyclone_v
     triple: arm-none-linux-gnueabihf
+    arch: armv7
     width: 32
     core_count: 2
     max_atomic_width: 64
     max_bitop_type_width: 32
-    gcc_flags: -mcpu=cortex-a9 -mfloat-abi=hard -mfpu=vfpv3
     registers:
       - resource: registers/cyclone_v/system_manager.yaml
         name: SYSMGR
         base_address: 0xffd08000
+      - resource: registers/cyclone_v/reset_manager.yaml
+        name: RSTMGR
+        base_address: 0xffd05000
+      - resource: registers/cyclone_v/fpga_manager.yaml
+        name: FPGAMGRREGS
+        base_address: 0xff706000
+      - resource: registers/cyclone_v/nic301.yaml
+        name: L3REGS
+        base_address: 0xff800000
+      - resource: registers/cyclone_v/sdram.yaml
+        name: SDR
+        base_address: 0xffc20000
+      - resource: registers/cyclone_v/fpga_manager_data.yaml
+        name: FPGAMGRDATA
+        base_address: 0xffb90000
       - resource: registers/cyclone_v/bridges.yaml
         name: LWFPGASLAVES
         base_address: 0xff200000
+        register_window_size: 0x00200000
       - resource: registers/cyclone_v/bridges.yaml
         name: LWHPS2FPGA
         base_address: 0xff400000
+        register_window_size: 0x00100000
       - resource: registers/cyclone_v/bridges.yaml
         name: HPS2FPGA
         base_address: 0xff500000
+        register_window_size: 0x00100000
       - resource: registers/cyclone_v/bridges.yaml
         name: FPGA2HPS
         base_address: 0xff600000
+        register_window_size: 0x00100000
 
   - type: program.main_mister
     name: main_mister

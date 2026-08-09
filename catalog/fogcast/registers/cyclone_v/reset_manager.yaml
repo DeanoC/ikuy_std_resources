@@ -1,0 +1,25 @@
+name: cyclone_v_reset_manager
+description: Cyclone V reset-manager fields directly accessed by Main_MiSTer.
+register:
+  - name: CTRL
+    type: rw
+    width: 32
+    default: 0x00000000
+    offset: 0x00000004
+    description: Reset-manager control register.
+    field:
+      - name: VALUE
+        bits: "31:0"
+        type: rw
+        shortdesc: Reset-manager control value.
+  - name: BRG_MOD_RESET
+    type: rw
+    width: 32
+    default: 0x00000000
+    offset: 0x0000001c
+    description: Bridge-module reset register.
+    field:
+      - name: VALUE
+        bits: "31:0"
+        type: rw
+        shortdesc: Bridge reset value.

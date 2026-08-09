@@ -1,4 +1,6 @@
 instance:
+  - name: soc.altera.cyclone_v
+    type: soc.altera.cyclone_v
   - name: cpu.arm.cyclone_v
     type: cpu.arm.cyclone_v
   - name: main_mister

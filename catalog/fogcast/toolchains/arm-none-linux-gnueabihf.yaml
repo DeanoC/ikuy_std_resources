@@ -1,5 +1,11 @@
 target: arm-none-linux-gnueabihf
-compiler: arm-none-linux-gnueabihf-g++
+compiler: arm-none-linux-gnueabihf-gcc
+linker: arm-none-linux-gnueabihf-ld
+strip: arm-none-linux-gnueabihf-strip
 version: 10.2.1
 abi: gnueabihf
-source: Main_MiSTer Makefile compiler command
+source: Main_MiSTer Makefile compiler, linker, and strip commands
+flags:
+  vdate: 260808
+  source_date_epoch: 1786215171
+  jobs: 1

@@ -1,0 +1,91 @@
+name: cyclone_v_fpga_manager
+description: Cyclone V FPGA-manager fields directly accessed by Main_MiSTer.
+register:
+  - name: STAT
+    type: rw
+    width: 32
+    default: 0x00000000
+    offset: 0x00000000
+    description: FPGA-manager status register.
+    field:
+      - name: VALUE
+        bits: "31:0"
+        type: rw
+        shortdesc: FPGA-manager status value.
+  - name: CTRL
+    type: rw
+    width: 32
+    default: 0x00000000
+    offset: 0x00000004
+    description: FPGA-manager control register.
+    field:
+      - name: VALUE
+        bits: "31:0"
+        type: rw
+        shortdesc: FPGA-manager control value.
+  - name: DCLKCNT
+    type: rw
+    width: 32
+    default: 0x00000000
+    offset: 0x00000008
+    description: FPGA-manager data-clock count register.
+    field:
+      - name: VALUE
+        bits: "31:0"
+        type: rw
+        shortdesc: Data-clock count.
+  - name: DCLKSTAT
+    type: rw
+    width: 32
+    default: 0x00000000
+    offset: 0x0000000c
+    description: FPGA-manager data-clock status register.
+    field:
+      - name: VALUE
+        bits: "31:0"
+        type: rw
+        shortdesc: Data-clock status.
+  - name: GPO
+    type: rw
+    width: 32
+    default: 0x00000000
+    offset: 0x00000010
+    description: FPGA-manager general-purpose output register.
+    field:
+      - name: VALUE
+        bits: "31:0"
+        type: rw
+        shortdesc: General-purpose output value.
+  - name: GPI
+    type: rw
+    width: 32
+    default: 0x00000000
+    offset: 0x00000014
+    description: FPGA-manager general-purpose input register.
+    field:
+      - name: VALUE
+        bits: "31:0"
+        type: rw
+        shortdesc: General-purpose input value.
+  - name: GPIO_PORTA_EOI
+    type: rw
+    width: 32
+    default: 0x00000000
+    offset: 0x0000084c
+    description: FPGA-manager GPIO end-of-interrupt register.
+    field:
+      - name: VALUE
+        bits: "31:0"
+        type: rw
+        shortdesc: GPIO end-of-interrupt value.
+  - name: GPIO_EXT_PORTA
+    type: rw
+    width: 32
+    default: 0x00000000
+    offset: 0x00000850
+    description: FPGA-manager GPIO external-port register.
+    field:
+      - name: VALUE
+        bits: "31:0"
+        type: rw
+        shortdesc: GPIO external-port value.

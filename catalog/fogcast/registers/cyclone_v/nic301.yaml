@@ -1,0 +1,14 @@
+name: cyclone_v_nic301
+description: Cyclone V NIC301 remap field directly accessed by Main_MiSTer.
+register:
+  - name: REMAP
+    type: rw
+    width: 32
+    default: 0x00000000
+    offset: 0x00000000
+    description: NIC301 remap register.
+    field:
+      - name: VALUE
+        bits: "31:0"
+        type: rw
+        shortdesc: NIC301 remap value.

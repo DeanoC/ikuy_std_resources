@@ -1,0 +1,14 @@
+name: cyclone_v_sdram
+description: Cyclone V SDR field directly accessed by Main_MiSTer.
+register:
+  - name: SDR_CTRL
+    type: rw
+    width: 32
+    default: 0x00000000
+    offset: 0x00005080
+    description: SDR controller field used during FPGA programming.
+    field:
+      - name: VALUE
+        bits: "31:0"
+        type: rw
+        shortdesc: SDR controller value.
