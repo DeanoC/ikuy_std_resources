@@ -1,3 +1,4 @@
+program: main_mister
 actions:
   - emit_memory_map
 process:

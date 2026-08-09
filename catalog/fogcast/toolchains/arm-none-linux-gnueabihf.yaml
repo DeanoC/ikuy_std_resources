@@ -1,0 +1,5 @@
+target: arm-none-linux-gnueabihf
+compiler: arm-none-linux-gnueabihf-g++
+version: 10.2.1
+abi: gnueabihf
+source: Main_MiSTer Makefile compiler command

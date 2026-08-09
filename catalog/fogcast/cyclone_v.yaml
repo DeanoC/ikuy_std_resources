@@ -1,4 +1,16 @@
 definition:
+  - type: soc.altera.cyclone_v
+    soc: cyclone_v
+    buses:
+      - name: hps_to_fpga
+        supplier: true
+        protocol: axi
+        prefix: hps_to_fpga
+        base_address: 0xff200000
+        data_width: 32
+        address_width: 25
+        fixed_base_address: true
+
   - type: cpu.arm.cyclone_v
     triple: arm-none-linux-gnueabihf
     width: 32
@@ -10,6 +22,18 @@ definition:
       - resource: registers/cyclone_v/system_manager.yaml
         name: SYSMGR
         base_address: 0xffd08000
+      - resource: registers/cyclone_v/bridges.yaml
+        name: LWFPGASLAVES
+        base_address: 0xff200000
+      - resource: registers/cyclone_v/bridges.yaml
+        name: LWHPS2FPGA
+        base_address: 0xff400000
+      - resource: registers/cyclone_v/bridges.yaml
+        name: HPS2FPGA
+        base_address: 0xff500000
+      - resource: registers/cyclone_v/bridges.yaml
+        name: FPGA2HPS
+        base_address: 0xff600000
 
   - type: program.main_mister
     name: main_mister
