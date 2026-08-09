@@ -57,10 +57,10 @@ build:
   source_date_epoch: 1786215171
   vdate: '260808'
   jobs: 1
-  shell: /bin/bash -o pipefail
+  shell: /stage-a0/build-utils/bin/bash -o pipefail
   commands:
-    - make clean VDATE=260808 SHELL='/bin/bash -o pipefail' BUILDDIR=bin
-    - make V=1 VDATE=260808 SHELL='/bin/bash -o pipefail' BUILDDIR=bin
+    - make clean VDATE=260808 SHELL='/stage-a0/build-utils/bin/bash -o pipefail' BUILDDIR=bin
+    - make V=1 VDATE=260808 SHELL='/stage-a0/build-utils/bin/bash -o pipefail' BUILDDIR=bin
   include_dirs:
     - .
     - lib/libco
