@@ -1,0 +1,7 @@
+boards:
+  - de10_nano
+catalogs:
+  - catalog/fogcast/de10_nano.yaml
+  - catalog/fogcast/cyclone_v.yaml
+prefabs:
+  - boards/de10_nano

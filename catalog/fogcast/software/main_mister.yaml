@@ -1,0 +1,9 @@
+actions:
+  - emit_memory_map
+process:
+  - name: emit_memory_map
+    processor: templates
+    cpus: _
+    sources:
+      - in: templates/main_mister_memory_map.h.in
+        out: memory_map.h

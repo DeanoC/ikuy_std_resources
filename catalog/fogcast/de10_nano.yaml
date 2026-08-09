@@ -1,0 +1,16 @@
+definition:
+  - type: board.de10_nano
+    board_type: Altera
+    fpga_type: Altera
+    fpga_family: Cyclone V
+    fpga_device: 5CSEBA6U23I7
+    clocks:
+      - name: clock.fpga_clk1_50
+        pin: V11
+        standard: 3.3-V LVTTL
+        frequency: 50MHz
+    pingroups:
+      - name: BOARD.LED0
+        pin: W15
+        standard: 3.3-V LVTTL
+        direction: output

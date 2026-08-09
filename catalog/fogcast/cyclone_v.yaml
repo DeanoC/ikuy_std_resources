@@ -1,0 +1,16 @@
+definition:
+  - type: cpu.arm.cyclone_v
+    triple: arm-none-linux-gnueabihf
+    width: 32
+    core_count: 2
+    max_atomic_width: 64
+    max_bitop_type_width: 32
+    gcc_flags: -mcpu=cortex-a9 -mfloat-abi=hard -mfpu=vfpv3
+    registers:
+      - resource: registers/cyclone_v/system_manager.yaml
+        name: SYSMGR
+        base_address: 0xffd08000
+
+  - type: program.main_mister
+    name: main_mister
+    software: software/main_mister.yaml

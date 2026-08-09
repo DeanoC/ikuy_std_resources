@@ -1,0 +1,5 @@
+instance:
+  - name: cpu.arm.cyclone_v
+    type: cpu.arm.cyclone_v
+  - name: main_mister
+    type: program.main_mister
