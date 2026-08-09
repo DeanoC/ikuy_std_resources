@@ -5,3 +5,14 @@ instance:
     type: cpu.arm.cyclone_v
   - name: main_mister
     type: program.main_mister
+connection:
+  - type: bus
+    connection: soc.altera.cyclone_v -> cpu.arm.cyclone_v
+    bus_name: hps_to_fpga
+    consumer_bus_name: hps_to_fpga
+    bus_protocol: axi
+  - type: bus
+    connection: soc.altera.cyclone_v -> cpu.arm.cyclone_v
+    bus_name: fpga_core_memory
+    consumer_bus_name: fpga_core_memory
+    bus_protocol: axi
