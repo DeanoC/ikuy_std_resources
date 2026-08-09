@@ -18,6 +18,21 @@ definition:
     core_count: 2
     max_atomic_width: 64
     max_bitop_type_width: 32
+    # Main_MiSTer maps the complete Cyclone V HPS register aperture rather
+    # than only the individual banks it touches. It also maps the FPGA shared
+    # memory alias used by fpga_mem()/shmem_map(). These are physical windows,
+    # not claims that every byte is a register.
+    memory_windows:
+      - name: HPS_REG_APERTURE
+        base_address: 0xff000000
+        size: 0x01000000
+        data_width: 32
+        address_width: 24
+      - name: FPGA_CORE_MEMORY
+        base_address: 0x20000000
+        size: 0x20000000
+        data_width: 32
+        address_width: 29
     registers:
       - resource: registers/cyclone_v/system_manager.yaml
         name: SYSMGR
